@@ -1,0 +1,11 @@
+Package: watchvpn
+Version: 1-0
+Depends: libc
+Source: feeds/packages/utils/watchvpn
+SourceName: watchvpn
+License: GPL-2.0
+Section: utils
+Maintainer: dimfish <dimfish@gmail.com>
+Architecture: all
+Installed-Size: 1732
+Description:  Allows to configure a periodically restart interface after losing vpn connectivity. Configured trough UCI /etc/config/system.
