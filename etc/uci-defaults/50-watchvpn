@@ -1,9 +1,10 @@
 #!/bin/sh
 
-uci -q show system.@watchvpn[0] || {
-	uci add system watchvpn
-	uci set system.@watchvpn[0].period=5m
-	uci set system.@watchvpn[0].pinghosts=8.8.8.8
-	uci set system.@watchvpn[0].ifname=vpn
+uci -q show watchvpn.@interface[0] || {
+	touch /etc/config/watchvpn
+	uci add watchvpn interface
+	uci set watchvpn.@interface[0].period=5m
+	uci set watchvpn.@interface[0].pinghosts=8.8.8.8
+	uci set watchvpn.@interface[0].ifname=vpn
 	uci commit
 }

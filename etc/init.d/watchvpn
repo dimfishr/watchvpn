@@ -27,6 +27,7 @@ load_watchvpn() {
 	config_get period	$1 period
 	config_get pinghosts	$1 pinghosts	"8.8.8.8"
 	config_get ifname	$1 ifname	"vpn"
+	config_get pingperiod	$1 pingperiod
 
 	error=""
 
@@ -48,6 +49,10 @@ load_watchvpn() {
 	else
 		pingperiod="$((period/10))"
 	fi
+
+	ir=`ifstatus $ifname 2>&1`
+	[ -z "${ir##*not found}" ] && append_string "error" $ifname" not found" "; "
+
 
 	[ -n "$error" ] && { logger -p user.err -t "watchvpn" "watchvpn not started - $error"; return; }
 
@@ -78,11 +83,11 @@ stop() {
 start() {
 	[ -f "${PIDFILE}.pids" ] && stop
 
-	config_load system
-	if [ -n "$(uci show system.@watchvpn[0])" ] # at least one watchvpn section exists
+	config_load watchvpn
+	if [ -n "$(uci show watchvpn.@interface[0])" ] # at least one watchvpn section exists
 	then
 		logger -p user.info -t "watchvpn" "starting all tasks"
-		config_foreach load_watchvpn watchvpn
+		config_foreach load_watchvpn interface
 		logger -p user.info -t "watchvpn" "all tasks started"
 	else
 		logger -p user.info -t "watchvpn" "no tasks defined"
