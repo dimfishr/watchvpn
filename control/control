@@ -7,5 +7,5 @@ License: GPL-2.0
 Section: utils
 Maintainer: dimfish <dimfish@gmail.com>
 Architecture: all
-Installed-Size: 1777
+Installed-Size: 1754
 Description:  Allows to configure a periodically restart interface after losing vpn connectivity. Configured trough UCI /etc/config/watchvpn.
